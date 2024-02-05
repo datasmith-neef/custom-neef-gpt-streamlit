@@ -4,15 +4,6 @@ import json
 import uuid
 from customgpt_client import CustomGPT
 
-
-from dotenv import load_dotenv
-import os
-
-load_dotenv()  # Lädt die Variablen aus der .env-Datei
-
-customgpt_api_key = os.getenv('CUSTOMGPT_API_KEY')
-
-
 # Function to retrieve citations using CustomGPT API
 def get_citations(api_token, project_id, citation_id):
     CustomGPT.api_key = api_token
@@ -65,7 +56,7 @@ def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
 
 # App title
-st.set_page_config(page_title="Factor - GPT Chatbot")
+st.set_page_config(page_title="CustomGPT Chatbot")
 
 # Check if session_id is not in session_state, initialize it
 if "session_id" not in st.session_state:
@@ -73,11 +64,10 @@ if "session_id" not in st.session_state:
 
 # CustomGPT Credentials
 with st.sidebar:
-    st.title('Factor-GPT (Settings)')
+    st.title('CustomGPT Streamlit Demo')
    
-    st.markdown("Hier können weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
-    #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
-    customgpt_api_key = customgpt_api_key
+    st.markdown("Don't have an API key? Get one [here](https://docs.customgpt.ai/reference/i-api-homepage).")
+    customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
     if customgpt_api_key:
         st.subheader('Select Project')
         listProject = get_projectList(customgpt_api_key)
