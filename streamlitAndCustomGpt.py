@@ -62,7 +62,7 @@ def get_projectList(api_token):
 # Function to clear chat history
 def clear_chat_history():
     st.session_state.session_id = str(uuid.uuid4())
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Moin , ich bin Factor-GPT , na?"}]
 
 # App title
 st.set_page_config(page_title="Factor - GPT Chatbot")
@@ -97,7 +97,7 @@ with st.sidebar:
 
 # Check if messages is not in session_state.keys(), initialize it
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "How may I assist you today?"}]
+    st.session_state.messages = [{"role": "assistant", "content": "Moin , ich bin Factor-GPT , na?"}]
 
 # Display or clear chat messages
 for index, message in enumerate(st.session_state.messages):
@@ -115,7 +115,7 @@ if prompt := st.chat_input(disabled=not customgpt_api_key):
 # Generate a new response if the last message is not from the assistant
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+        with st.spinner("RatterRatter..."):
             client = query_chatbot(customgpt_api_key, selected_project['id'], st.session_state.session_id, prompt)
             placeholder = st.empty()
             full_response = ""
@@ -151,17 +151,17 @@ if st.session_state.messages[-1]["role"] != "assistant":
                                 count += 1
                                 citation_links.append(formatted_url)
 
-                        if citation_links:
-                            cita = "\n\nSources:\n"
-                            for link in citation_links:
-                                cita += f"{link}\n"
-                            full_response += cita
-                            placeholder.markdown(full_response + "▌")
+                        # if citation_links:
+                        #     cita = "\n\nSources:\n"
+                        #     for link in citation_links:
+                        #         cita += f"{link}\n"
+                        #     full_response += cita
+                        #     placeholder.markdown(full_response + "▌")
                            
             placeholder.markdown(full_response)
             
     if full_response == "":
-        full_response = "Oh no! Any unknown error has occurred. Please check your CustomGPT Dashboard for details."
+        full_response = "Oh no! Unbekannter Fehler.Kontaktiere den Administrator."
         placeholder.markdown(full_response)
     
     message = {"role": "assistant", "content": full_response}
