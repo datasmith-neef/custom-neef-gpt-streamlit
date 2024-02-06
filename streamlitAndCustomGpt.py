@@ -39,7 +39,7 @@ def get_citations(api_token, project_id, citation_id):
         print(f"error::{e}")
 
 # Function to query the chatbot using CustomGPT API
-def query_chatbot(api_token, project_id, session_id, message, stream=True, lang='en'):
+def query_chatbot(api_token, project_id, session_id, message, stream=True, lang='de'):
     CustomGPT.api_key = api_token
     try:
         stream_response = CustomGPT.Conversation.send(project_id=project_id, session_id=session_id, prompt=message, stream=stream, lang=lang)
@@ -74,6 +74,7 @@ if "session_id" not in st.session_state:
 # CustomGPT Credentials
 with st.sidebar:
     st.title('Factor-GPT (Settings)')
+    st.image("compressed_office_image.jpg")
    
     st.markdown("Hier können weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
     #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
