@@ -76,7 +76,7 @@ with st.sidebar:
     st.title('Factor-GPT (Settings)')
     st.image("compressed_office_image.jpg")
    
-    st.markdown("Hier können weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
+    st.markdown("Hier können X weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
     #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
     customgpt_api_key = customgpt_api_key
     if customgpt_api_key:
