@@ -12,8 +12,8 @@ load_dotenv()  # Lädt die Variablen aus der .env-Datei
 
 customgpt_api_key = os.getenv('CUSTOMGPT_API_KEY')
 activation_code_1 = st.secrets['ACTIVATION_CODE_FAC']
-activation_code_2 = os.getenv('ACTIVATION_CODE_SIN')
-activation_code_3 = os.getenv('ACTIVATION_CODE_DSO')
+activation_code_2 = st.secrets['ACTIVATION_CODE_SIN']
+activation_code_3 = st.secrets['ACTIVATION_CODE_DSO']
 
 #st.write("new_secret",st.secrets["voucher100"]) schreiben und nutzen von secrets innergalb der APP
 
