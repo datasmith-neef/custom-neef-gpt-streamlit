@@ -99,7 +99,7 @@ with st.sidebar:
         
 
     elif activation_code == activation_code_2:
-        selected_index = 0
+        selected_index = "0"
         st.success("Activated")
         sidebar_header.header("Sintronics-GPT (Activated)")
 
@@ -123,12 +123,19 @@ with st.sidebar:
             projectNames = [projt.project_name for projt in listProject]
             
             selected_index = selected_index # Auswahl je nach Activation Codes
-            if selected_index != 77:
-                selected_model = st.sidebar.selectbox('Select Model', options=[projectNames[selected_index]], index=0, key='selected_model')
+            if selected_index == "0":
+                selected_model = st.sidebar.selectbox('Select Model', options=[projectNames[int(selected_index)]], key='selected_model')
+                index = projectNames.index(selected_model)
+                selected_project = listProject[index]
+            elif selected_index == 1:
+                selected_model = st.sidebar.selectbox('Select Model', options=[projectNames[selected_index]],key='selected_model')
+                index = projectNames.index(selected_model)
+                selected_project = listProject[index]
+            else: 
+                selected_model = st.sidebar.selectbox('Select Model', projectNames, key='selected_model') # admin für alle projekte
+                index = projectNames.index(selected_model)
+                selected_project = listProject[index]
             
-            else: selected_model = st.sidebar.selectbox('Select Model', projectNames, key='selected_model') # admin für alle projekte
-            index = projectNames.index(selected_model)
-            selected_project = listProject[index]
             
         else:
             st.error('No projects found. Please check your API key.', icon='❌')
