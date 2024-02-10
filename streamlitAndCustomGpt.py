@@ -95,6 +95,7 @@ with st.sidebar:
         st.success("Activated")
         sidebar_header.header("Factor.design-GPT (Activated)")
         
+
     elif activation_code == activation_code_2:
         selected_index = 0
         st.success("Activated")
