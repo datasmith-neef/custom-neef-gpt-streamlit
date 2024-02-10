@@ -101,6 +101,7 @@ with st.sidebar:
         st.success("Activated")
         sidebar_header.header("Sintronics-GPT (Activated)")
 
+
     elif activation_code == activation_code_3:
         selected_index = 77
         st.success("Activated")
