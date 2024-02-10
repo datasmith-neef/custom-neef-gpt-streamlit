@@ -15,14 +15,14 @@ activation_code_1 = st.secrets['ACTIVATION_CODE_FAC']
 activation_code_2 = os.getenv('ACTIVATION_CODE_SIN')
 activation_code_3 = os.getenv('ACTIVATION_CODE_DSO')
 
-
+#st.write("new_secret",st.secrets["voucher100"]) schreiben und nutzen von secrets innergalb der APP
 
 # App title
 st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='💬')
 
 st.markdown('<div class="typewriter-text">👾 Factor.Design-GPT</div>', unsafe_allow_html=True)
 st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
-st.write("new_secret",st.secrets["voucher100"])
+
 # Function to retrieve citations using CustomGPT API
 def get_citations(api_token, project_id, citation_id):
     CustomGPT.api_key = api_token
