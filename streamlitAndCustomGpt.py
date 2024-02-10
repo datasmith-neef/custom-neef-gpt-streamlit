@@ -15,6 +15,11 @@ activation_code_1 = os.getenv('ACTIVATION_CODE_FAC')
 activation_code_2 = os.getenv('ACTIVATION_CODE_SIN')
 activation_code_3 = os.getenv('ACTIVATION_CODE_DSO')
 
+headers = {
+    "authorization": st.secrets["ACTIVATION_CODE_FAC"],
+    "content-type": "application/json"
+}
+
 # App title
 st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='💬')
 
