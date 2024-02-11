@@ -25,7 +25,12 @@ st.markdown("""
     .stActionButton
             {
                 visibility:hidden;
-            }        
+            }    
+
+    .st-emotion-cache-6mv2k3    
+             {
+                visibility:hidden;
+            }    
 
 </style>
 
