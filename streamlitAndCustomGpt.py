@@ -20,6 +20,18 @@ activation_code_3 = st.secrets['ACTIVATION_CODE_DSO']
 # App title
 st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='💬')
 
+st.markdown("""
+<style>
+    .stDeployButton
+            {
+                visibility:hidden;
+            }        
+
+</style>
+
+""",unsafe_allow_html=True)
+
+
 st.markdown('<div class="typewriter-text">👾 Factor.Design-GPT</div>', unsafe_allow_html=True)
 st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
 
