@@ -22,7 +22,7 @@ st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='💬')
 
 st.markdown("""
 <style>
-    .stDeployButton
+    .stActionButton
             {
                 visibility:hidden;
             }        
