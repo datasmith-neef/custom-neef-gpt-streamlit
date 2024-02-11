@@ -14,12 +14,16 @@ customgpt_api_key = os.getenv('CUSTOMGPT_API_KEY')
 activation_code_1 = st.secrets['ACTIVATION_CODE_FAC']
 activation_code_2 = st.secrets['ACTIVATION_CODE_SIN']
 activation_code_3 = st.secrets['ACTIVATION_CODE_DSO']
-
+firma = "Robot"
 #st.write("new_secret",st.secrets["voucher100"]) schreiben und nutzen von secrets innergalb der APP
 
 # App title
-st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='💬')
+st.set_page_config(page_title="Datasmith - GPT Chatbot",page_icon='assets/datasmith.ico')
 
+
+
+
+## entwickler optionen sandwichmenue ausblenden
 st.markdown("""
 <style>
     .stActionButton
@@ -27,14 +31,18 @@ st.markdown("""
                 visibility:hidden;
             }    
 
-   
+    
 
 </style>
 
 """,unsafe_allow_html=True)
 
 
-st.markdown('<div class="typewriter-text">👾 Factor.Design-GPT</div>', unsafe_allow_html=True)
+default_title = 'assets/datasmith.ico'
+customer_1 = 'assets/factor.ico'
+customer_2 = 'assets/sintronics.ico'
+
+logo_chat = st.image(default_title,width=33,caption = "GPT")
 st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
 
 # Function to retrieve citations using CustomGPT API
@@ -86,7 +94,7 @@ def get_projectList(api_token):
 # Function to clear chat history
 def clear_chat_history():
     st.session_state.session_id = str(uuid.uuid4())
-    st.session_state.messages = [{"role": "assistant", "content": "Moin , ich bin Factor-GPT , na?"}]
+    st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
 
 
 
@@ -110,18 +118,24 @@ with st.sidebar:
         selected_index = 1
         st.success("Activated")
         sidebar_header.header("Factor.design-GPT (Activated)")
+        logo_chat.image(customer_1)
+        firma = "Factor"
         
 
     elif activation_code == activation_code_2:
         selected_index = "0"
         st.success("Activated")
         sidebar_header.header("Sintronics-GPT (Activated)")
+        logo_chat.image(customer_2)
+        firma = "Sintronics"
 
 
     elif activation_code == activation_code_3:
         selected_index = 77
         st.success("Activated")
         sidebar_header.header("Datasmith-GPT (Admin-Mode)")
+        logo_chat.image(default_title)
+        firma = "Robot"
 
     else : st.error('No projects found. Please check your actication key.', icon='❌')
     
@@ -159,7 +173,8 @@ with st.sidebar:
 
 # Check if messages is not in session_state.keys(), initialize it
 if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": "Moin , ich bin Factor-GPT , na?"}]
+    
+    st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
 
 # Display or clear chat messages
 for index, message in enumerate(st.session_state.messages):
