@@ -164,7 +164,7 @@ if "session_id" not in st.session_state:
 with st.sidebar:
     ts = 'Datasmith-GPT (Settings)'
     sidebar_header = st.header(ts)
-    st.image("compressed_office_image.jpg")
+    st.image("assets/playful_robot_trans.png")
    
     st.markdown("Hier können X weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
     #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
