@@ -43,6 +43,48 @@ default_title = 'assets/datasmith.ico'
 customer_1 = 'assets/factor.ico'
 customer_2 = 'assets/sintronics.ico'
 
+
+st.markdown("""
+    <style>
+        @keyframes typewriter {
+            from { 
+                width: 0; 
+            }
+            to { 
+                width: 100%; 
+            }
+        }
+
+        @keyframes blink {
+            from, to {
+                border-color: transparent;
+            }
+            50% {
+                border-color: black;
+            }
+   
+     
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 0.05em solid black;  /* Cursor-Effekt */
+            white-space: nowrap;
+            font-size: 0.9rem; 
+            
+            animation: 
+        typewriter 5s steps(50, end), 
+        blink .75s step-end 13, 
+        fadeOutCursor 0.25s forwards 10s;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+#st.markdown('<div class="typewriter-text">💬 Datasmith-GPT</div>', unsafe_allow_html=True)
+
+
+
 #logo_chat = st.image(default_title,width=33,caption = "GPT")
 #st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
 
@@ -57,8 +99,9 @@ with col1:
 # Zweite Spalte für den Text
 with col2:
     st.write(f"{funktion} - GPT")
-    st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
+    st.caption('<div class="typewriter-text">🚀 A chatbot powered by OpenAI LLM and Datasmith Office</div>', unsafe_allow_html=True)
 
+st.markdown("---")
 
 # Function to retrieve citations using CustomGPT API
 def get_citations(api_token, project_id, citation_id):
@@ -127,6 +170,7 @@ with st.sidebar:
     #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
     customgpt_api_key = customgpt_api_key
     activation_code = st.text_input('Enter youre activation_code : ',type = 'password',on_change=clear_chat_history)
+    
    
     selected_index = ''
     if activation_code == activation_code_1:
@@ -135,7 +179,7 @@ with st.sidebar:
         sidebar_header.header("Factor-GPT (Activated)")
         logo_chat.image(customer_1)
         firma = "Factor"
-        
+        clear_chat_history()
         
 
     elif activation_code == activation_code_2:
@@ -144,7 +188,7 @@ with st.sidebar:
         sidebar_header.header("Sintronics-GPT (Activated)")
         logo_chat.image(customer_2)
         firma = "Sintronics"
-        
+        clear_chat_history()
         
         
 
@@ -155,7 +199,7 @@ with st.sidebar:
         sidebar_header.header("Datasmith-GPT (Admin-Mode)")
         logo_chat.image(default_title)
         firma = "Robot"
-        
+        clear_chat_history()
 
     else : st.error('No projects found. Please check your actication key.', icon='❌')
     
