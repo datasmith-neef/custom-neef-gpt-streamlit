@@ -15,6 +15,7 @@ activation_code_1 = st.secrets['ACTIVATION_CODE_FAC']
 activation_code_2 = st.secrets['ACTIVATION_CODE_SIN']
 activation_code_3 = st.secrets['ACTIVATION_CODE_DSO']
 firma = "Robot"
+funktion = "my_Website"
 #st.write("new_secret",st.secrets["voucher100"]) schreiben und nutzen von secrets innergalb der APP
 
 # App title
@@ -42,8 +43,22 @@ default_title = 'assets/datasmith.ico'
 customer_1 = 'assets/factor.ico'
 customer_2 = 'assets/sintronics.ico'
 
-logo_chat = st.image(default_title,width=33,caption = "GPT")
-st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
+#logo_chat = st.image(default_title,width=33,caption = "GPT")
+#st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
+
+
+# Erstellen Sie zwei Spalten im Layout
+col1, col2 = st.columns([1, 20])  # Die Zahlen bestimmen das Verhältnis der Spaltenbreiten
+
+# Erste Spalte für das Bild
+with col1:
+    logo_chat = st.image(default_title, width=32)  # Stellen Sie die Breite des Bildes ein
+
+# Zweite Spalte für den Text
+with col2:
+    st.write(f"{funktion} - GPT")
+    st.caption("🚀 A chatbot powered by OpenAI LLM and Datasmith Office")
+
 
 # Function to retrieve citations using CustomGPT API
 def get_citations(api_token, project_id, citation_id):
@@ -111,15 +126,16 @@ with st.sidebar:
     st.markdown("Hier können X weitere Projekte hinzugefügt werden - Demoversion - Datasmith Office")
     #customgpt_api_key = st.text_input('Enter CustomGPT API Key:', type='password')
     customgpt_api_key = customgpt_api_key
-    activation_code = st.text_input('Enter youre activation_code : ',type = 'password')
-
+    activation_code = st.text_input('Enter youre activation_code : ',type = 'password',on_change=clear_chat_history)
+   
     selected_index = ''
     if activation_code == activation_code_1:
         selected_index = 1
         st.success("Activated")
-        sidebar_header.header("Factor.design-GPT (Activated)")
+        sidebar_header.header("Factor-GPT (Activated)")
         logo_chat.image(customer_1)
         firma = "Factor"
+        
         
 
     elif activation_code == activation_code_2:
@@ -128,6 +144,9 @@ with st.sidebar:
         sidebar_header.header("Sintronics-GPT (Activated)")
         logo_chat.image(customer_2)
         firma = "Sintronics"
+        
+        
+        
 
 
     elif activation_code == activation_code_3:
@@ -136,6 +155,7 @@ with st.sidebar:
         sidebar_header.header("Datasmith-GPT (Admin-Mode)")
         logo_chat.image(default_title)
         firma = "Robot"
+        
 
     else : st.error('No projects found. Please check your actication key.', icon='❌')
     
@@ -171,75 +191,76 @@ with st.sidebar:
         # Button to reset chat
         st.sidebar.button('Reset Chat', on_click=clear_chat_history)
 
+if activation_code:
 # Check if messages is not in session_state.keys(), initialize it
-if "messages" not in st.session_state.keys():
-    
-    st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
+    if "messages" not in st.session_state.keys():
+        
+        st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
 
-# Display or clear chat messages
-for index, message in enumerate(st.session_state.messages):
-    with st.chat_message(message["role"]):
-        # Display the message content
-        st.write(f"{message['content']}")
+    # Display or clear chat messages
+    for index, message in enumerate(st.session_state.messages):
+        with st.chat_message(message["role"]):
+            # Display the message content
+            st.write(f"{message['content']}")
 
-# User-provided prompt
-if prompt := st.chat_input(disabled=not customgpt_api_key):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        # Display the user's message
-        st.write(prompt)
+    # User-provided prompt
+    if prompt := st.chat_input(disabled=not customgpt_api_key):
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        with st.chat_message("user"):
+            # Display the user's message
+            st.write(prompt)
 
-# Generate a new response if the last message is not from the assistant
-if st.session_state.messages[-1]["role"] != "assistant":
-    with st.chat_message("assistant"):
-        with st.spinner("RatterRatter..."):
-            client = query_chatbot(customgpt_api_key, selected_project['id'], st.session_state.session_id, prompt)
-            placeholder = st.empty()
-            full_response = ""
-            
-            for event in client.events():
-                print(event.data)
-                resp_data = eval(event.data.replace('null', 'None'))
+    # Generate a new response if the last message is not from the assistant
+    if st.session_state.messages[-1]["role"] != "assistant":
+        with st.chat_message("assistant"):
+            with st.spinner("RatterRatter..."):
+                client = query_chatbot(customgpt_api_key, selected_project['id'], st.session_state.session_id, prompt)
+                placeholder = st.empty()
+                full_response = ""
                 
-                # Check different status types
-                if resp_data is not None:
-                    if resp_data.get('status') == 'error':
-                        full_response += resp_data.get('message', '')
-                        placeholder.markdown(full_response + "▌")
+                for event in client.events():
+                    print(event.data)
+                    resp_data = eval(event.data.replace('null', 'None'))
+                    
+                    # Check different status types
+                    if resp_data is not None:
+                        if resp_data.get('status') == 'error':
+                            full_response += resp_data.get('message', '')
+                            placeholder.markdown(full_response + "▌")
 
-                    if resp_data.get('status') == 'progress':
-                        full_response += resp_data.get('message', '')
-                        placeholder.markdown(full_response + "▌")
+                        if resp_data.get('status') == 'progress':
+                            full_response += resp_data.get('message', '')
+                            placeholder.markdown(full_response + "▌")
 
-                    if resp_data.get('status') == 'finish' and resp_data.get('citations') is not None:
-                        citation_ids = resp_data.get('citations', [])
+                        if resp_data.get('status') == 'finish' and resp_data.get('citations') is not None:
+                            citation_ids = resp_data.get('citations', [])
 
-                        citation_links = []
-                        count = 1
-                        
-                        # Process citation links
-                        for citation_id in citation_ids:
-                            citation_obj = get_citations(customgpt_api_key, selected_project['id'], citation_id)
-                            url = citation_obj.get('url', '')
-                            title = citation_obj.get('title', '')
+                            citation_links = []
+                            count = 1
                             
-                            if len(url) > 0:
-                                formatted_url = f"{count}. [{title or url}]({url})"
-                                count += 1
-                                citation_links.append(formatted_url)
+                            # Process citation links
+                            for citation_id in citation_ids:
+                                citation_obj = get_citations(customgpt_api_key, selected_project['id'], citation_id)
+                                url = citation_obj.get('url', '')
+                                title = citation_obj.get('title', '')
+                                
+                                if len(url) > 0:
+                                    formatted_url = f"{count}. [{title or url}]({url})"
+                                    count += 1
+                                    citation_links.append(formatted_url)
 
-                        # if citation_links:
-                        #     cita = "\n\nSources:\n"
-                        #     for link in citation_links:
-                        #         cita += f"{link}\n"
-                        #     full_response += cita
-                        #     placeholder.markdown(full_response + "▌")
-                           
+                            # if citation_links:
+                            #     cita = "\n\nSources:\n"
+                            #     for link in citation_links:
+                            #         cita += f"{link}\n"
+                            #     full_response += cita
+                            #     placeholder.markdown(full_response + "▌")
+                            
+                placeholder.markdown(full_response)
+                
+        if full_response == "":
+            full_response = "Oh no! Unbekannter Fehler.Kontaktiere den Administrator."
             placeholder.markdown(full_response)
-            
-    if full_response == "":
-        full_response = "Oh no! Unbekannter Fehler.Kontaktiere den Administrator."
-        placeholder.markdown(full_response)
-    
-    message = {"role": "assistant", "content": full_response}
-    st.session_state.messages.append(message)
+        
+        message = {"role": "assistant", "content": full_response}
+        st.session_state.messages.append(message)
