@@ -5,6 +5,9 @@ import uuid
 from customgpt_client import CustomGPT
 
 
+# customgpt hat 5000 Stunden damit verbracht Halluzinationen rauszukriegen -- gut für non-confidential data -- öffentlich verfügbare Daten wie Websites etc...
+# ausrichtung everyone with webbroser build one -- übernehme ich ... 
+
 from dotenv import load_dotenv
 import os
 
@@ -308,3 +311,20 @@ if activation_code:
         
         message = {"role": "assistant", "content": full_response}
         st.session_state.messages.append(message)
+
+
+# Check if messages is not in session_state.keys(), initialize it
+if "messages" not in st.session_state.keys():
+    st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
+
+# Hier beginnt die Ergänzung
+# Eine zusätzliche Sektion in der Sidebar für die Chat-Historie
+with st.sidebar:
+    st.write("### Chat-Historie")
+    chat_history_expander = st.expander("Chats dieser Session", expanded=True)
+    with chat_history_expander:
+        for index, message in enumerate(st.session_state.messages):
+            # Verwende markdown oder text, um die Nachrichten anzuzeigen
+            st.markdown(f"- **{message['role'].title()}**: {message['content']}")
+
+        
