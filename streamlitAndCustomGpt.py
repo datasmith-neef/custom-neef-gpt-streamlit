@@ -7,6 +7,7 @@ from customgpt_client import CustomGPT
 
 # customgpt hat 5000 Stunden damit verbracht Halluzinationen rauszukriegen -- gut für non-confidential data -- öffentlich verfügbare Daten wie Websites etc...
 # ausrichtung everyone with webbroser build one -- übernehme ich ... 
+# Stand der Demoversion für Factor 07032024 ,Chathistorie, 2 Projekte, 3 Aktivierungscodes, 1 Admin-Modushi 
 
 from dotenv import load_dotenv
 import os
@@ -314,8 +315,8 @@ if activation_code:
 
 
 # Check if messages is not in session_state.keys(), initialize it
-if "messages" not in st.session_state.keys():
-    st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
+#if "messages" not in st.session_state.keys():
+ #   st.session_state.messages = [{"role": "assistant", "content": f"Moin , ich bin {firma}-GPT , na?"}]
 
 # Hier beginnt die Ergänzung
 # Eine zusätzliche Sektion in der Sidebar für die Chat-Historie
